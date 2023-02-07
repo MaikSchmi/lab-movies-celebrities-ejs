@@ -1,1 +1,21 @@
-<h2>HALLO</h2>
+<h2>Edit Movie</h2>
+
+<form action="/movies/<%-movie._id%>/edit" method="POST">
+    <label>Title: <input type="text", name="title" value="<%=movie.title%>"/></label>
+    <label>Genre: <input type="text", name="genre" value="<%=movie.genre%>"/></label>
+    <label>Plot: <input type="text", name="plot" value="<%=movie.plot%>"/></label>
+    <label>Cast: 
+        <% movie.cast.forEach(castCeleb => { %>
+            <select name="cast">
+                <% celebrities.forEach(celebrity => { %>
+                    <% if (celebrity._id.valueOf() === castCeleb.valueOf()) { %>
+                        <option value="<%=celebrity._id%>" selected><%=celebrity._id%></option>
+                    <% } else { %>
+                        <option value="<%=celebrity._id%>"><%=celebrity._id%></option>
+                    <% } %>
+                <% }) %>
+            </select>
+        <% }) %> 
+    </label>
+    <button type="submit">Save Changes</button>
+</form>

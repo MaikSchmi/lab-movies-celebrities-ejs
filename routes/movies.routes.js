@@ -52,23 +52,24 @@ router.post("/:id/delete", async (req, res, next) => {
   }
 });
 
-router.get("/:id/edit"), async (req, res, next) => {
+router.get("/:id/edit", async (req, res, next) => {
   try {
-    console.log("HAAAALLOOOOOO")
-/*     const movie = MovieModel.findById(req.params.id);
-    const celeb = CelebrityModel.findById(req.params); */
-    //res.render("/movies/edit-movie")
+    const movie = await MovieModel.findById(req.params.id);
+    const celebrities = await CelebrityModel.find();
+    res.render("movies/edit-movie", {movie: movie, celebrities: celebrities})
   } catch (error) {
     console.log("In Movie / Edit (Get): ", error);
   }
-}
+});
 
-/* router.post("/:id/edit"), async (req, res, next) => {
+router.post("/:id/edit", async (req, res, next) => {
   try {
-
+    const changedMovie = req.body;
+    await MovieModel.findByIdAndUpdate(req.params.id, {...req.body, cast: req.body.cast});
+    res.redirect("/movies/" + req.params.id)
   } catch (error) {
     console.log("In Movie / Edit (Post): ", error);
   }
-} */
+});
 
 module.exports = router;
